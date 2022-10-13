@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+int MAXSIZE;
+typedef struct
+{
+    int *base;
+    int front;
+    int rear;
+}SqQueue;
+
+void InitQueue(SqQueue &Q)
+{
+    cin>>MAXSIZE;
+    Q.base = new int [MAXSIZE];
+    Q.front = 0;
+    Q.rear = 0;
+}
+
+
+
+void Push_rear(SqQueue &Q,int i,int elem){
+    Q.base[i] = elem;
+    Q.rear = i;
+}
+void Push_front(SqQueue &Q,int i,int elme){
+    for (int j = i; j >=0 ; --j)
+    {
+        int a = Q.base[j];
+        Q.base[j+1] = a;
+    }
+    Q.base[Q.front] = elme;
+    Q.rear = i;
+}
+void GetElem(SqQueue &Q){
+    for (int i = 0; i < MAXSIZE; ++i)
+    {
+        int elem;
+        cin>>elem;
+        if (i==0){
+            Push_rear(Q,i,elem);
+        }else if(i == 1){
+            if (elem > Q.base[i-1])
+                Push_rear(Q,i,elem);
+            else
+                Push_front(Q,i,elem);
+        }else{
+            if(elem>=(Q.base[Q.front]+Q.base[Q.rear])/2.0)
+                Push_rear(Q,i,elem);
+            else
+                Push_front(Q,i,elem);
+        }
+    }
+
+}
+void Print(SqQueue &Q)
+{
+    for (int i = 0; i < MAXSIZE; ++i)
+    {
+        cout<<Q.base[i]<<" ";
+    }
+}
+int main()
+{
+    SqQueue Q;
+    InitQueue(Q);
+    GetElem(Q);
+    Print(Q);
+}
+
