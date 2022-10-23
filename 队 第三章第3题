@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+#define MAXSIZE 6
+typedef struct Queue{
+    int *base;
+    int front,rear;
+};
+void Push(Queue &q,int n){
+    if ((q.rear+1)%MAXSIZE == q.front) return;
+    else{
+        q.base[q.rear] = n;
+        q.rear = (q.rear+1)%MAXSIZE;
+    }
+}
+void Pop(Queue &q){
+    if (q.front == q.rear) {
+        return;
+    };
+    q.base[q.front] = 0;
+    q.front = (q.front+1)%MAXSIZE;
+}
+void input(Queue &q){
+    int num;
+    while (1){
+        cin>>num;
+        if (num == -2) break;
+        if (num != -1){
+            Push(q, num);
+        } else if (num == -1){
+            Pop(q);
+        }
+    }
+}
+void Print(Queue &q){
+    if (q.rear == q.front){
+        cout<<"NULL";
+    }
+    else
+        while (q.front!=q.rear){
+            cout<<q.base[q.front]<<" ";
+            q.front = (q.front+1)%MAXSIZE;
+        }
+}
+int main()
+{
+    Queue q;
+    q.base = new int [MAXSIZE];
+    q.front = q.rear = 0;
+    input(q);
+    Print(q);
+
+}
