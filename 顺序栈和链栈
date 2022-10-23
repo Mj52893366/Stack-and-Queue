@@ -1,0 +1,89 @@
+//#include <iostream>
+//using namespace std;
+//#define MAXSIZA 100
+//typedef struct SqStack{
+//    int *base,*top;
+//    int stacksize;
+//}SqStack;
+//void Push_Stack(SqStack &s,int num){
+//    if (*s.top - *s.base == s.stacksize) return;
+//    *s.top++ = num;
+//}
+//void Pop_Stack(SqStack &s){
+//    if (s.top == s.base) return;
+//    int e= *--s.top;
+//}
+//void input(SqStack &s){
+//    int num;
+//    while (1){
+//        cin>>num;
+//        if (num == -2) break;
+//        else if (num != -1)
+//            Push_Stack(s,num);
+//        else if (num == -1)
+//            Pop_Stack(s);
+//    }
+//}
+//void Print(SqStack s){
+//    if (s.top == s.base) cout<<"0";
+//    else{
+//        while (s.base != s.top){
+//            cout<<*s.base++<<" ";
+//        }
+//    }
+//}
+//int main(){
+//    SqStack s;
+//    s.base = new int [MAXSIZA];
+//    s.top = s.base;
+//    s.stacksize = MAXSIZA;
+//    input(s);
+//    Print(s);
+//}
+#include <bits/stdc++.h>
+using namespace std;
+typedef struct StackNode{
+    int data;
+    StackNode *next;
+}StackNode,*LinkStack;
+
+void Push_Stack(LinkStack &L,int i){
+    StackNode *p = new StackNode ;
+    p->data = i;                    //头插法 方便取栈顶元素
+    p->next = L;
+    L = p;
+}
+void Pop_Stack(LinkStack &L){
+    if (L == nullptr) return;
+    int e = L->data;
+    StackNode *p = L;
+    L= L->next;
+    delete p;
+}
+void Print(LinkStack &L){
+    if (L == nullptr)return;
+    while (L){
+        cout<<L->data<<" ";
+        L=L->next;
+    }
+}
+void input(LinkStack &L){
+    int num;
+    while (1){
+        cin>>num;
+        if (num == -2) break;
+        else if (num == -1) Pop_Stack(L);
+        else if (num!=-1) Push_Stack(L,num);
+    }
+}
+
+int main(){
+    LinkStack L;
+    L = nullptr;
+    input(L);
+    Print(L);
+
+
+}
+
+
